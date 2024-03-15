@@ -1,0 +1,3 @@
+"""
+Initialization of app module
+"""
