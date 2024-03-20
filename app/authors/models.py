@@ -1,12 +1,11 @@
-from sqlalchemy import (Column, String, Integer, Boolean, 
-                        DateTime, func, ForeignKey)
+from sqlalchemy import Column, String, Integer, DateTime, func
 
 from app.db import db
 
 
 class Authors(db.Model):
     __tablename__ = 'authors'
-    
+
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String(45), nullable=False)
     last_name = Column(String(45), nullable=False)
