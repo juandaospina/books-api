@@ -1,6 +1,7 @@
 import typing as t
 
 from .models import Authors
+from app.exceptions import ObjectNotFound
 
 
 def get_all_authors() -> t.List[Authors]:
@@ -11,7 +12,6 @@ def get_all_authors() -> t.List[Authors]:
         List[Authors]: List of authors
     """
     return Authors.get_all()
-
 
 def get_author_by_id(id: int) -> t.Optional[Authors]:
     """
@@ -26,8 +26,10 @@ def get_author_by_id(id: int) -> t.Optional[Authors]:
     Returns:
         Dict[Authors] or None if the author is not found
     """
-    return Authors.get_by_id(id)
-
+    _author = Authors.get_by_id(id)
+    if _author is None:
+        raise ObjectNotFound()
+    return _author
 
 def create_author(first_name, last_name, age, email, nacionality) -> Authors:
     """
@@ -46,7 +48,6 @@ def create_author(first_name, last_name, age, email, nacionality) -> Authors:
     _author = Authors(first_name, last_name, age, email, nacionality)
     return Authors.create_object(_author)
 
-
 def update_author(author_id: int, **kwargs) -> Authors:
     """
     Updates the information about the author of the repository
@@ -64,7 +65,6 @@ def update_author(author_id: int, **kwargs) -> Authors:
     _author = get_author_by_id(author_id)
     _author.update(kwargs)
     return _author
-
 
 def delete_author(author_id: int) -> None:
     """

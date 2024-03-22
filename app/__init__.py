@@ -6,6 +6,7 @@ from .db import db, ma, migrate
 from app.docs import docs
 from app.books.router import books_bp
 from app.authors.router import authors_bp
+from app.errors_handling import register_errors
 
 
 def initialize_extensions(app: Flask):
@@ -48,6 +49,9 @@ def create_app():
 
     # Documentation
     configure_docs(app)
+
+    # Error handling
+    register_errors(app)
 
     # Extensions
     initialize_extensions(app)
