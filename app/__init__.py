@@ -4,7 +4,8 @@ from flask_apispec.extension import APISpec, MarshmallowPlugin
 
 from .db import db, ma, migrate
 from app.docs import docs
-from app.books.router import book_bp
+from app.books.router import books_bp
+from app.authors.router import authors_bp
 
 
 def initialize_extensions(app: Flask):
@@ -29,7 +30,8 @@ def configure_docs(app: Flask):
 
 
 def register_blueprints(app: Flask):
-    app.register_blueprint(book_bp)
+    app.register_blueprint(books_bp)
+    app.register_blueprint(authors_bp)
 
 
 def create_app():
