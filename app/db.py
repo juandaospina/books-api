@@ -14,7 +14,7 @@ class BaseModelMixin:
     
     @classmethod
     def get_by_id(cls, id):
-        return db.session.query(cls).filter(cls.id == id).first()
+        return cls.query.filter(cls.id == id).first()
     
 
     def create_object(data):

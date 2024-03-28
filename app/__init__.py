@@ -21,7 +21,7 @@ def configure_docs(app: Flask):
         'APISPEC_SPEC': APISpec(
             title='Books API',
             version='1.0',
-            openapi_version="2.0.0", 
+            openapi_version="2.0", 
             plugins=[MarshmallowPlugin()],
         ),
         'APISPEC_SWAGGER_URL': '/docs',
