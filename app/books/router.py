@@ -14,13 +14,15 @@ api = Api(books_bp)
 @doc(tags=['Books'], responses={422: {"description": "Entidad no procesable"}})
 class BooksResource(views.MethodResource, Resource):
     @doc(description="Get all books from repository")
-    @marshal_with(BookResponseSchema(many=True, exclude=["author_id", "format_id"]), code=200)
+    @marshal_with(BookResponseSchema(many=True, 
+                                     exclude=["author_id", "format_id", "editorial_id"]), 
+                                     code=200)
     def get(self):
         data = repository.get_all_books()
         return data, 200
 
     @doc(description="Create a new book in the repository", code=200)
-    @marshal_with(BookResponseSchema(exclude=["author_id", "format_id"]))
+    @marshal_with(BookResponseSchema(exclude=["author_id", "format_id", "editorial_id"]))
     @use_kwargs(BooksSchema, location="json")
     def post(self, **kwargs):
         # _errors = BooksSchema().validate(data=kwargs)
@@ -34,13 +36,15 @@ class BooksResource(views.MethodResource, Resource):
 )
 class BookResource(views.MethodResource, Resource):
     @doc(description="Get a book by id")
-    @marshal_with(BookResponseSchema(exclude=["author_id", "format_id"]), code=200)
+    @marshal_with(BookResponseSchema(exclude=["author_id", "format_id", "editorial_id"]), 
+                  code=200)
     def get(self, book_id: int):
         data = repository.get_book_by_id(book_id)
         return data, 200
 
     @doc(description="Update a book")
-    @marshal_with(BookResponseSchema(exclude=["author_id", "format_id"]), code=200)
+    @marshal_with(BookResponseSchema(exclude=["author_id", "format_id", "editorial_id"]), 
+                  code=200)
     @use_kwargs(BooksSchema, location="json")
     def put(self, book_id: int, **kwargs):
         _errors = BooksSchema().validate(kwargs)

@@ -31,13 +31,15 @@ class BooksSchema(ma.Schema):
     language = fields.String()
     number_of_pages = fields.Integer()
     edition_number = fields.Integer(allow_none=True)
-    author_id = fields.Integer(required=True) 
-    format_id = fields.Integer(required=True)
+    author_id = fields.Integer(allow_none=False) 
+    format_id = fields.Integer(allow_none=False)
+    editorial_id = fields.Integer(allow_none=False)
 
 
 class BookResponseSchema(BooksSchema):
     author = fields.Nested(AuthorSchema, dump_only=True)
     format = fields.String(attribute="format.format", dump_only=True)
+    editorial = fields.String(attribute="editorial.name", dump_only=True)
 
 class EmptySchema(ma.Schema):
     pass
