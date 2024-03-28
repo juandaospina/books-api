@@ -1,4 +1,5 @@
 import typing as t
+from datetime import datetime
 
 from .models import Authors
 from app.exceptions import ObjectNotFound
@@ -31,21 +32,23 @@ def get_author_by_id(id: int) -> t.Optional[Authors]:
         raise ObjectNotFound()
     return _author
 
-def create_author(first_name, last_name, age, email, nacionality) -> Authors:
+def create_author(first_name, last_name, email, 
+                  nacionality, about_author, born_date) -> Authors:
     """
     Create a new author in the repository
 
     Parameters:
         first_name (str): The first name of the author
         last_name (str): The last name of the author
-        age (int): The age of the author
         email (str): The email address of the author
         nacionality (str): The nacionality of the author
+        **kwargs (dict): Additional properties
 
     Returns:
         Dict[Authors]: The new author object
     """
-    _author = Authors(first_name, last_name, age, email, nacionality)
+    _author = Authors(first_name, last_name, email, 
+                      nacionality, about_author, born_date)
     return Authors.create_object(_author)
 
 def update_author(author_id: int, **kwargs) -> Authors:
@@ -54,7 +57,7 @@ def update_author(author_id: int, **kwargs) -> Authors:
 
     Parameters:
         author_id (int): ID of the author to be updated
-        kwargs (dict): Additional properties to be passed to the update 
+        **kwargs (dict): Additional properties to be passed to the update 
 
     Raises:
         ObjectNotFound: if the author to be updated does not exist
@@ -63,6 +66,7 @@ def update_author(author_id: int, **kwargs) -> Authors:
         Dict[Authors]: The information of author updated
     """
     _author = get_author_by_id(author_id)
+    kwargs["updated_at"] = datetime.now()
     _author.update(kwargs)
     return _author
 
