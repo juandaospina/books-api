@@ -41,6 +41,7 @@ def create_book(
         isbn: int, 
         isbn13: int,
         format_id: int, 
+        editorial_id: int, 
     ) -> Books:
     """
     Create a new book in the repository
@@ -56,6 +57,7 @@ def create_book(
         isbn (int): International Standard Book Number 
         isbn13 (int): International Standard Book Number
         format_id (int): Format of publish book
+        editorial_id (int): Editorial that publish book
     
     Returns:
         Book: The created book
@@ -70,7 +72,8 @@ def create_book(
         author_id, 
         isbn, 
         isbn13,
-        format_id
+        format_id, 
+        editorial_id
     )
     _book = _book.create_object()
     return _book

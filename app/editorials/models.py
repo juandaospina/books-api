@@ -1,4 +1,5 @@
 from sqlalchemy import Column, DateTime, String, Integer, func
+from sqlalchemy.orm import relationship 
 
 from app.db import db, BaseModelMixin
 
@@ -8,3 +9,4 @@ class Editorials(db.Model, BaseModelMixin):
     name = Column(String, nullable=False)
     about = Column(String, nullable=True)
     created_at = Column(DateTime, server_default=func.now())
+    book_editorial = relationship("Books", back_populates="editorial")

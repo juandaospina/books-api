@@ -17,8 +17,10 @@ class Books(db.Model, BaseModelMixin):
     edition_number = Column(Integer, nullable=True)
     author_id = Column(Integer, ForeignKey("authors.id", ondelete="CASCADE"))
     format_id = Column(Integer, ForeignKey("books_format.id", ondelete="CASCADE"))
+    editorial_id = Column(Integer, ForeignKey("editorials.id"))
     author = relationship("Authors")
     format = relationship("BooksFormat", back_populates="book_format")
+    editorial = relationship("Editorials", back_populates="book_editorial")
 
     def __init__(
             self, 
@@ -32,6 +34,7 @@ class Books(db.Model, BaseModelMixin):
             isbn: int,
             isbn13: int,
             format_id: int, 
+            editorial_id: int,
         ):
         self.title = title
         self.description = description
@@ -43,6 +46,7 @@ class Books(db.Model, BaseModelMixin):
         self.isbn = isbn
         self.isbn13 = isbn13
         self.format_id = format_id
+        self.editorial_id = editorial_id
 
 
 class BooksFormat(db.Model):
