@@ -6,6 +6,7 @@ from .db import db, ma, migrate
 from app.docs import docs
 from app.books.router import books_bp
 from app.authors.router import authors_bp
+from app.editorials.router import editorials_bp 
 from app.errors_handling import register_errors
 
 
@@ -33,6 +34,7 @@ def configure_docs(app: Flask):
 def register_blueprints(app: Flask):
     app.register_blueprint(books_bp)
     app.register_blueprint(authors_bp)
+    app.register_blueprint(editorials_bp)
 
 
 def create_app():
