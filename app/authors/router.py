@@ -6,7 +6,7 @@ from . import repository, schemas
 from app.docs import docs
 
 
-authors_bp = Blueprint('authors', __name__)
+authors_bp = Blueprint('authors', __name__, url_prefix="/v1")
 api = Api(authors_bp)
 
 
@@ -41,7 +41,6 @@ class AuthorResource(views.MethodResource, Resource):
     @use_kwargs(schemas.AuthorSchema(exclude=["created_at"]), location="json")
     def put(self, author_id, **kwargs):
         data = repository.update_author(author_id, **kwargs)
-        # data = schemas.AuthorSchema().dump(_author)
         return data, 200
     
 
