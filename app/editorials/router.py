@@ -6,7 +6,7 @@ from app.docs import docs
 from . import repository, schemas
 
 
-editorials_bp = Blueprint("editorials", __name__, url_prefix="/v1")
+editorials_bp = Blueprint("editorials", __name__, url_prefix="/api/v1")
 api = Api(editorials_bp)
 
 
