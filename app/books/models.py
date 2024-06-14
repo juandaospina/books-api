@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from app.db import db, BaseModelMixin
 
+
 class Books(db.Model, BaseModelMixin):
     __tablename__ = 'books' 
 
@@ -21,6 +22,7 @@ class Books(db.Model, BaseModelMixin):
     author = relationship("Authors")
     format = relationship("BooksFormat", back_populates="book_format")
     editorial = relationship("Editorials", back_populates="book_editorial")
+    categories = relationship("Category", secondary="book_category")
 
     def __init__(
             self, 
@@ -35,6 +37,7 @@ class Books(db.Model, BaseModelMixin):
             isbn13: int,
             format_id: int, 
             editorial_id: int,
+            categories: list[dict[str, int | str]] | None = None
         ):
         self.title = title
         self.description = description
@@ -47,7 +50,15 @@ class Books(db.Model, BaseModelMixin):
         self.isbn13 = isbn13
         self.format_id = format_id
         self.editorial_id = editorial_id
+        self.categories = categories if categories else []
 
+
+book_category = db.Table(
+    'book_category',
+    Column('book_id', Integer, ForeignKey('books.id'), primary_key=True),
+    Column('category_id', Integer, ForeignKey('categories.id'), 
+           primary_key=True),
+)
 
 class BooksFormat(db.Model):
     __tablename__ = 'books_format'

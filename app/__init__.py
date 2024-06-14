@@ -58,7 +58,4 @@ def create_app():
     # Extensions
     initialize_extensions(app)
 
-    with app.app_context():
-        db.create_all()
-
     return app

@@ -25,7 +25,7 @@ class BooksResource(views.MethodResource, Resource):
     @marshal_with(BookResponseSchema(exclude=["author_id", "format_id", "editorial_id"]))
     @use_kwargs(BooksSchema, location="json")
     def post(self, **kwargs):
-        # _errors = BooksSchema().validate(data=kwargs)
+        # errors = BooksSchema().validate(data=kwargs)
         data = repository.create_book(**kwargs)
         return data, 200
     
@@ -47,8 +47,7 @@ class BookResource(views.MethodResource, Resource):
                   code=200)
     @use_kwargs(BooksSchema, location="json")
     def put(self, book_id: int, **kwargs):
-        _errors = BooksSchema().validate(kwargs)
-        print("[ERROS]", _errors)
+        # errors = BooksSchema().validate(kwargs)
         data = repository.update_book(book_id, **kwargs)
         return data, 200
 
