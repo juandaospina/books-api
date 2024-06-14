@@ -1,9 +1,9 @@
 from sqlalchemy import Column, DateTime, Integer, String, func
 
-from app.db import db
+from app.db import db, BaseModelMixin
 
 
-class Category(db.Model):
+class Category(db.Model, BaseModelMixin):
     __tablename__ = "categories"
     
     id = Column(Integer, primary_key=True, index=True)
