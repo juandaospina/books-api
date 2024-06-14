@@ -2,6 +2,8 @@ import typing as t
 
 from .models import Books
 from app.exceptions import ObjectNotFound
+from app.categories.models import Category
+
 
 def get_book_by_id(book_id: int) -> t.Optional[Books]:
     """
@@ -16,10 +18,10 @@ def get_book_by_id(book_id: int) -> t.Optional[Books]:
     Returns:
         A dict of book or None if the book is not found
     """
-    _book = Books.get_by_id(book_id)
-    if _book is None:
+    book = Books.get_by_id(book_id)
+    if book is None:
         raise ObjectNotFound()
-    return _book
+    return book
 
 def get_all_books() -> t.List[Books]:
     """
@@ -41,7 +43,8 @@ def create_book(
         isbn: int, 
         isbn13: int,
         format_id: int, 
-        editorial_id: int, 
+        editorial_id: int,
+        categories: list[dict[str, int | str]] | None 
     ) -> Books:
     """
     Create a new book in the repository
@@ -58,11 +61,12 @@ def create_book(
         isbn13 (int): International Standard Book Number
         format_id (int): Format of publish book
         editorial_id (int): Editorial that publish book
+        categories (list): Book categories
     
     Returns:
         Book: The created book
     """
-    _book = Books(
+    book = Books(
         title, 
         description, 
         published_year, 
@@ -75,8 +79,12 @@ def create_book(
         format_id, 
         editorial_id
     )
-    _book = _book.create_object()
-    return _book
+    for category in categories: 
+        _category = Category.query.get(category["id"])
+        if _category:
+            book.categories.append(_category)
+    book.create_object()
+    return book
 
 def update_book(book_id: int, **kwargs) -> t.Optional[Books]:
     """
@@ -95,9 +103,9 @@ def update_book(book_id: int, **kwargs) -> t.Optional[Books]:
     Returns:
         Dict[Book]: A dict with the updated book information
     """
-    _book = get_book_by_id(book_id)
-    _book.update(kwargs)
-    return _book
+    book = get_book_by_id(book_id)
+    book.update(kwargs)
+    return book
 
 def delete_book(book_id) -> None:
     """
@@ -112,5 +120,5 @@ def delete_book(book_id) -> None:
     Returns: 
         None
     """
-    _book = get_book_by_id(book_id)
-    _book.delete()
+    book = get_book_by_id(book_id)
+    book.delete()
