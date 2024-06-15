@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask_restful import Api, Resource
 from flask_apispec import views, doc, marshal_with, use_kwargs
+from flask_jwt_extended import jwt_required
 
 from . import repository, schemas
 from app.docs import docs
@@ -19,9 +20,11 @@ class AuthorsResource(views.MethodResource, Resource):
         return data, 200
     
 
-    @doc(description="This method enable the creation of a new author.")
+    @doc(description="This method enable the creation of a new author.",
+         security=[{"Bearer": []}])
     @marshal_with(schemas.AuthorSchema(), code=200)
     @use_kwargs(schemas.AuthorSchema(exclude=["created_at"]), location="json")
+    @jwt_required()
     def post(self, **kwargs):
         data = repository.create_author(**kwargs)
         return data, 200
@@ -36,16 +39,21 @@ class AuthorResource(views.MethodResource, Resource):
         return data, 200
     
 
-    @doc(description="This method upgrade an author.")
+    @doc(description="This method upgrade an author.", 
+         security=[{"Bearer": []}])
     @marshal_with(schemas.AuthorSchema, code=200)
     @use_kwargs(schemas.AuthorSchema(exclude=["created_at"]), location="json")
+    @jwt_required()
     def put(self, author_id, **kwargs):
         data = repository.update_author(author_id, **kwargs)
         return data, 200
     
 
-    @doc(description="Method for delete an author by id.")
-    @marshal_with(schemas.EmptySchema, code=204, description="If author is deleted successfully")
+    @doc(description="Method for delete an author by id.", 
+         security=[{"Bearer": []}])
+    @marshal_with(schemas.EmptySchema, code=204, 
+                  description="If author is deleted successfully")
+    @jwt_required()
     def delete(self, author_id):
         repository.delete_author(author_id)
         return None, 204
