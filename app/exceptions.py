@@ -20,3 +20,14 @@ class ObjectNotFound(Exception):
         _response["message"] = self.message
         _response["status_code"] = self.status_code
         return _response
+    
+
+class Unauthorized(Exception):
+    status_code = 401
+    message = "Usuario no autorizado"
+
+    def to_dict(self):
+        response = dict(())
+        response["message"] = self.message
+        response["status_code"] = self.status_code
+        return response
