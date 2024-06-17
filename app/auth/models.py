@@ -12,3 +12,9 @@ class User(db.Model, BaseModelMixin):
     username = Column(String(100), nullable=False, unique=True)
     password = Column(String(100), nullable=False)
     created_at = Column(DateTime(), server_default=func.now())
+
+    def __str__(self) -> str:
+        return f"Value: {self.first_name}"
+    
+    def __repr__(self) -> str:
+        return f"User('{self.first_name}')"
