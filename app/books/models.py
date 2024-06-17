@@ -55,9 +55,10 @@ class Books(db.Model, BaseModelMixin):
 
 book_category = db.Table(
     'book_category',
-    Column('book_id', Integer, ForeignKey('books.id'), primary_key=True),
-    Column('category_id', Integer, ForeignKey('categories.id'), 
-           primary_key=True),
+    Column('book_id', Integer, 
+           ForeignKey('books.id', ondelete="CASCADE"), primary_key=True),
+    Column('category_id', Integer, 
+           ForeignKey('categories.id', ondelete="CASCADE"), primary_key=True),
 )
 
 class BooksFormat(db.Model):
