@@ -19,11 +19,11 @@ class IsbnValidator(validate.Validator):
         return len(str(value)) <= self.max_numbers
 
 
-class CategoriesSchema(ma.Schema):
+class CategorySchema(ma.Schema):
     id = fields.Integer()
     name = fields.Str()
 
-class BooksSchema(ma.Schema):
+class BookSchema(ma.Schema):
     id = fields.Integer(dump_only=True)
     isbn = fields.Integer(validate=IsbnValidator(), allow_none=True)
     isbn13 = fields.Integer(validate=IsbnValidator(), allow_none=True) 
@@ -38,10 +38,10 @@ class BooksSchema(ma.Schema):
     author_id = fields.Integer(allow_none=False) 
     format_id = fields.Integer(allow_none=False)
     editorial_id = fields.Integer()
-    categories = fields.List(fields.Nested(CategoriesSchema, allow_none=True)) # new
+    categories = fields.List(fields.Nested(CategorySchema, allow_none=True))
 
 
-class BookResponseSchema(BooksSchema):
+class BookResponseSchema(BookSchema):
     author = fields.Nested(AuthorSchema, dump_only=True)
     format = fields.String(attribute="format.format", dump_only=True)
     editorial = fields.String(attribute="editorial.name", dump_only=True)

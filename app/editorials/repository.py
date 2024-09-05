@@ -1,12 +1,10 @@
 import typing as t
 
-from .models import Editorials 
+from .models import Editorial 
 
-def get_all_editorials() -> t.List[Editorials]:
-    """
-    Retrieve all the editorials for a repository
+def get_all_editorials() -> t.List[Editorial]:
+    """Retrieve all the editorials for a repository
 
-    Returns:
-        List[Editorials]: A list of Editorials
+    :return: A list of Editorial objects
     """
-    return Editorials.get_all()
+    return Editorial.get_all()

@@ -9,7 +9,7 @@ from .schema import UserSchema
 from . import repository
 
 
-jwt_bp = Blueprint("jwt", __name__, url_prefix="/v1")
+jwt_bp = Blueprint("jwt", __name__, url_prefix="/api/v1")
 api = Api(jwt_bp)
 
 

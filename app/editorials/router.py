@@ -11,16 +11,16 @@ api = Api(editorials_bp)
 
 
 @doc(tags=["Editorials"])
-class EditorialsResource(views.MethodResource, Resource):
+class EditorialResource(views.MethodResource, Resource):
     @doc(description="Return all the editorials")
-    @marshal_with(schemas.EditorialsSchema(many=True), code=200)
+    @marshal_with(schemas.EditorialSchema(many=True), code=200)
     def get(self):
         data = repository.get_all_editorials()
         return data, 200
 
 
 # Add resourceS
-api.add_resource(EditorialsResource, "/editorials")
+api.add_resource(EditorialResource, "/editorials")
 
 # Register resources for docs
-docs.register(EditorialsResource, blueprint=editorials_bp.name)
+docs.register(EditorialResource, blueprint=editorials_bp.name)

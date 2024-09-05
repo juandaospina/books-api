@@ -4,11 +4,11 @@ from flask_apispec import views, doc, marshal_with, use_kwargs
 from flask_jwt_extended import jwt_required
 
 from . import repository 
-from .schemas import BooksSchema, BookResponseSchema, EmptySchema
+from .schemas import BookSchema, BookResponseSchema, EmptySchema
 from app.docs import docs
 
 
-books_bp = Blueprint('books', __name__, url_prefix="/v1")
+books_bp = Blueprint('books', __name__, url_prefix="/api/v1")
 api = Api(books_bp)
     
 
@@ -27,10 +27,10 @@ class BooksResource(views.MethodResource, Resource):
          security=[{"Bearer": []}])
     @marshal_with(BookResponseSchema(exclude=["author_id", 
                                               "format_id", "editorial_id"]))
-    @use_kwargs(BooksSchema, location="json")
+    @use_kwargs(BookSchema, location="json")
     @jwt_required()
     def post(self, **kwargs):
-        # errors = BooksSchema().validate(data=kwargs)
+        # errors = BookSchema().validate(data=kwargs)
         data = repository.create_book(**kwargs)
         return data, 200
     
@@ -52,10 +52,10 @@ class BookResource(views.MethodResource, Resource):
     @marshal_with(BookResponseSchema(exclude=["author_id", 
                                               "format_id", "editorial_id"]), 
                   code=200)
-    @use_kwargs(BooksSchema, location="json")
+    @use_kwargs(BookSchema, location="json")
     @jwt_required()
     def put(self, book_id: int, **kwargs):
-        # errors = BooksSchema().validate(kwargs)
+        # errors = BookSchema().validate(kwargs)
         data = repository.update_book(book_id, **kwargs)
         return data, 200
 
@@ -69,7 +69,7 @@ class BookResource(views.MethodResource, Resource):
 
 # Add resources
 api.add_resource(BooksResource, "/books")
-api.add_resource(BookResource, "/book/<int:book_id>")
+api.add_resource(BookResource, "/books/<int:book_id>")
 
 # Register resources for docs
 docs.register(BooksResource, blueprint=books_bp.name)
