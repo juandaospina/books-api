@@ -7,8 +7,9 @@ from .schemas import CategorySchema
 from . import repository
 
 
-category_bp = Blueprint("category", __name__, url_prefix="/v1")
+category_bp = Blueprint("category", __name__, url_prefix="/api/v1")
 api = Api(category_bp)
+
 
 @doc(tags=["Categories"], responses={
     200: {"description": "Respuesta exitosa"}})
@@ -21,7 +22,7 @@ class CategoryResource(views.MethodResource, Resource):
 
 
 # Add resource
-api.add_resource(CategoryResource, "/category")
+api.add_resource(CategoryResource, "/categories")
 
 # Register resource for docs
 docs.register(CategoryResource, blueprint=category_bp.name)

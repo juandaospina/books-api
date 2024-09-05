@@ -7,7 +7,7 @@ from . import repository, schemas
 from app.docs import docs
 
 
-authors_bp = Blueprint('authors', __name__, url_prefix="/v1")
+authors_bp = Blueprint('authors', __name__, url_prefix="/api/v1")
 api = Api(authors_bp)
 
 
@@ -61,7 +61,7 @@ class AuthorResource(views.MethodResource, Resource):
 
 # Add resources
 api.add_resource(AuthorsResource, "/authors")
-api.add_resource(AuthorResource, "/author/<int:author_id>")
+api.add_resource(AuthorResource, "/authors/<int:author_id>")
 
 # Register resources for docs
 docs.register(AuthorsResource, blueprint=authors_bp.name)
