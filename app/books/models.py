@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from app.db import db, BaseModelMixin
 
 
-class Books(db.Model, BaseModelMixin):
+class Book(db.Model, BaseModelMixin):
     __tablename__ = 'books' 
 
     id = Column(Integer, primary_key=True, index=True)
@@ -19,9 +19,9 @@ class Books(db.Model, BaseModelMixin):
     author_id = Column(Integer, ForeignKey("authors.id", ondelete="CASCADE"))
     format_id = Column(Integer, ForeignKey("books_format.id", ondelete="CASCADE"))
     editorial_id = Column(Integer, ForeignKey("editorials.id"))
-    author = relationship("Authors")
-    format = relationship("BooksFormat", back_populates="book_format")
-    editorial = relationship("Editorials", back_populates="book_editorial")
+    author = relationship("Author")
+    format = relationship("BookFormat", back_populates="book_format")
+    editorial = relationship("Editorial", back_populates="book_editorial")
     categories = relationship("Category", secondary="book_category")
 
     def __init__(
@@ -61,9 +61,9 @@ book_category = db.Table(
            ForeignKey('categories.id', ondelete="CASCADE"), primary_key=True),
 )
 
-class BooksFormat(db.Model):
+class BookFormat(db.Model):
     __tablename__ = 'books_format'
 
     id = Column(Integer, primary_key=True, index=True)
     format = Column(String(45))
-    book_format = relationship(Books, back_populates="format")
+    book_format = relationship(Book, back_populates="format")

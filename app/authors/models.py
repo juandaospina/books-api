@@ -5,7 +5,7 @@ from sqlalchemy import Column, String, Integer, DateTime, func
 from app.db import db, BaseModelMixin
 
 
-class Authors(db.Model, BaseModelMixin):
+class Author(db.Model, BaseModelMixin):
     __tablename__ = 'authors'
 
     id = Column(Integer, primary_key=True, index=True)

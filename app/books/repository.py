@@ -1,11 +1,11 @@
 import typing as t
 
-from .models import Books
+from .models import Book
 from app.exceptions import ObjectNotFound
 from app.categories.models import Category
 
 
-def get_book_by_id(book_id: int) -> t.Optional[Books]:
+def get_book_by_id(book_id: int) -> t.Optional[Book]:
     """
     Retrieve a book by id
 
@@ -18,19 +18,19 @@ def get_book_by_id(book_id: int) -> t.Optional[Books]:
     Returns:
         A dict of book or None if the book is not found
     """
-    book = Books.get_by_id(book_id)
+    book = Book.get_by_id(book_id)
     if book is None:
         raise ObjectNotFound()
     return book
 
-def get_all_books() -> t.List[Books]:
+def get_all_books() -> t.List[Book]:
     """
     This function returns all the books in the database
 
     Returns:
         List[Books]
     """
-    return Books.get_all()
+    return Book.get_all()
 
 def create_book(
         title: str, 
@@ -45,7 +45,7 @@ def create_book(
         format_id: int, 
         editorial_id: int,
         categories: list[dict[str, int | str]] | None 
-    ) -> Books:
+    ) -> Book:
     """
     Create a new book in the repository
 
@@ -66,7 +66,7 @@ def create_book(
     Returns:
         Book: The created book
     """
-    book = Books(
+    book = Book(
         title, 
         description, 
         published_year, 
@@ -86,7 +86,7 @@ def create_book(
     book.create_object()
     return book
 
-def update_book(book_id: int, **kwargs) -> t.Optional[Books]:
+def update_book(book_id: int, **kwargs) -> t.Optional[Book]:
     """
     Updates the information about the book of the repository
 
