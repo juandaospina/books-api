@@ -10,6 +10,7 @@ from app.authors.router import authors_bp
 from app.books.router import books_bp
 from app.categories.router import category_bp 
 from app.editorials.router import editorials_bp 
+from app.public.router import public_bp  
 from app.errors_handling import register_errors
 
 
@@ -46,6 +47,7 @@ def register_blueprints(app: Flask):
     app.register_blueprint(editorials_bp)
     app.register_blueprint(category_bp)
     app.register_blueprint(jwt_bp)
+    app.register_blueprint(public_bp)
 
 
 def create_app():
